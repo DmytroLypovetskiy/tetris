@@ -34,6 +34,7 @@
 
     var field = new global.Field();
     figure.field = field;
+
     Test.assert(!!figure.move(1, 0), 'it should move right');
 
     figure.x = 8;
@@ -51,6 +52,20 @@
     figure.y = 15;
     Test.assert(!figure.move(0, 1), 'it should not move down');
 
+//    // Test collisions
+//    figure.field = new global.Field(4,6);
+//    figure.field.fieldArray = [
+//        [0, 0, 0, 0],
+//        [0, 0, 0, 0],
+//        [3, 0, 0, 0],
+//        [2, 0, 0, 0],
+//        [0, 1, 3, 0],
+//        [1, 1, 2, 0]
+//    ];
+
+
+
+//    Test.assert(figure.checkCollisions(), 'collision occurs');
 
 
 

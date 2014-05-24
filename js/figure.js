@@ -81,17 +81,16 @@
             this.y += y;
 
             // Check if the figure is not out of field
-            if ((this.x + figWidth > this.field.width) || (this.x < 0)) {
+            if ((this.x + figWidth > this.field.width) || (this.x < 0) || (this.y + figHeight > this.field.height)) {
                 return false;
             }
-            if ((this.y + figHeight > this.field.height)) {
-                // We need to check filed lines in case the figure intersects the bottom border
-                this.field.checkLines();
-                return false;
-            }
+
             // Checking collisions with other figures
             if (this.checkCollisions()) {
-                this.field.checkLines();
+                this.x = currentX;
+                this.y = currentY;
+                //this.field.checkLines();
+                //this.field.dropFigure(this);
                 return false;
             }
             return true;
@@ -101,8 +100,11 @@
          * Checks collisions with other figures
          * @returns {boolean}
          */
-        checkCollisions: function (x, y, width, height) {
-            return global.Utils.isArraysIntersected(this.model, this.field.getSubArray(this.x, this.y, this.model[0].length, this.model.length));
+        checkCollisions: function () {
+            return global.Utils.isArraysIntersected(
+                this.model,
+                this.field.getSubArray(this.x, this.y, this.model[0].length, this.model.length)
+            );
         },
 
         /**
