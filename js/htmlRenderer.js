@@ -41,6 +41,9 @@
                     })[0] : '#ffffff';
                     cell.style.backgroundColor = color.hex;
                     cell.className = 'cell';
+                    if (resultArray[i][j] !== 0) {
+                        cell.className += ' filled';
+                    }
                     document.getElementById('gameField').appendChild(cell);
                 }
 

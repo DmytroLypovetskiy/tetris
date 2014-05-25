@@ -50,7 +50,7 @@
 
         /**
          * Rotate figure to the right.
-         * @param {Boolean}
+         * @param {Boolean} should we ignore field and do rotate anyway
          */
         rotate: function (force) {
             var resultMatrix = [],
@@ -68,7 +68,7 @@
                 resultMatrix,
                 this.field.getSubArray(this.x, this.y, resultMatrix[0].length, resultMatrix.length));
 
-            if (!force && (isIntersected || (resultMatrix[0].length + this.x > this.field.width))) {
+            if (!force && (isIntersected || (resultMatrix[0].length + this.x > this.field.width)  || (resultMatrix.length + this.y > this.field.height) )) {
                 return false;
             }
 

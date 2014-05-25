@@ -23,12 +23,12 @@
         [3, 3]
     ]), 'it should repaint the model with appropriate color id');
 
-    figure.rotate();
+    figure.rotate(true);
     Test.assert(Test.isEqual(figure.model, [
         [3, 0, 0],
         [3, 3, 3]
     ]), 'it should rotate the model to the right');
-    figure.rotate();
+    figure.rotate(true);
     Test.assert(Test.isEqual(figure.model, [
         [3, 3],
         [3, 0],

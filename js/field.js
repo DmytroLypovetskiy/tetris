@@ -39,6 +39,10 @@
             return resultArray;
         },
 
+        /**
+         * Check lines. If they are filled - remove them.
+         * @returns {Array}
+         */
         checkAndDeleteLines: function () {
             for (var line = 0; line < this.height; line++) {
                 if (this._checkLine(this.fieldArray[line])) {
@@ -80,15 +84,14 @@
             for (var i = y; i < height + y; i++) {
                 tempArray = [];
                 for (var j = x; j < width + x; j++) {
-                    tempArray.push(this.fieldArray[i][j]);
+                    if (typeof this.fieldArray[i] !== 'undefined') {
+                        tempArray.push(this.fieldArray[i][j]);
+                    }
                 }
                 resultArray.push(tempArray);
             }
             return resultArray;
         }
-
-
-
     };
     global.Field  = Field;
 })(this);

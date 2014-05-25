@@ -13,32 +13,38 @@
         prevFrameTime: 0,
         currentSpeed: 200,
         progress: 0,
+        score: 0,
 
         /**
          * Init
          */
         init: function () {
+            this.score = 0;
             this.field = new global.Field();
             this.renderer = new global.HtmlRenderer({
                 container: '#wrapper'
             });
 
             this.keyController = new global.KeyController();
+
             // Event for rotate
-            this.keyController.on(global.KEY.SPACE, function () {
+            this.keyController.on(global.KEY.UP_ARROW, function () {
                 this.currentFigure.rotate();
             }, this);
+
             // Event for move figure to the left
             this.keyController.on(global.KEY.LEFT_ARROW, function () {
-                this.currentFigure.move(-1,0);
+                this.currentFigure.move(-1, 0);
             }, this);
+
             // Event for move figure to the right
             this.keyController.on(global.KEY.RIGHT_ARROW, function () {
-                this.currentFigure.move(1,0);
+                this.currentFigure.move(1, 0);
             }, this);
+
             // Event for move figure to the bottom
             this.keyController.on(global.KEY.DOWN_ARROW, function () {
-                this.currentFigure.move(0,1);
+                this.currentFigure.move(0, 1);
             }, this);
 
             this.dropNewFigure();
@@ -57,7 +63,6 @@
                 this.progress = 0;
                 this.currentFigure.update();
             }
-
             this.draw();
             requestAnimationFrame(this.update.bind(this));
 
@@ -71,26 +76,16 @@
             this.currentFigure = global.FigureRepository.getRandomFigure();
             this.currentFigure.field = this.field;
             this.currentFigure.x = this.field.width/2 - 1;
-
-
-
-            //console.log(this.currentFigure.model.length + ' this.currentFigure.model.length');
-            for (var i = 0; i < this.field.width; i++) {
-                for (var j = 0; j < this.field.height; j++) {
-                    //console.log(this.field.fieldArray[i][j]);
-                }
-                //console.log('-------------' + i);
-                //console.log(this.field.fieldArray[i]);
-                //console.log(i + ' i');
-
-                if (i < this.currentFigure.model.length) {
-                    //this.gameOver();
-                }
+            if (this.currentFigure.checkCollisions()) {
+                this.draw();
+                this.gameOver();
+                return;
             }
         },
 
         gameOver: function () {
-            alert('Game Over');
+            alert('Game Over. Looser!!!');
+            this.init();
         }
 
     };

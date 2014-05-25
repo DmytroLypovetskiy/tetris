@@ -20,7 +20,7 @@
             },
             {
                 id: 4,
-                hex: '#000000'
+                hex: '#ffff00'
             }
         ],
         figures: [

@@ -1,7 +1,7 @@
 (function (global) {
-    Test.describe('WidgetRepo');
+    Test.describe('FigureRepo');
 
-    var figure = FigureRepository.getFigure(4, FigureRepository.colors[2]);
+    var figure = FigureRepository.getFigure(4, FigureRepository.colors[1]);
     Test.assert(Test.isEqual(figure.model, [
         [2, 2, 2],
         [0, 2, 0]
