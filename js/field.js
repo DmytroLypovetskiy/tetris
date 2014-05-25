@@ -18,9 +18,7 @@
         fieldArray: null,
 
         init: function () {
-
             this.fieldArray = this.createFieldArray(this.width, this.height);
-            this.htmlRenderer(this.width, this.height)
         },
 
         /**
@@ -41,8 +39,31 @@
             return resultArray;
         },
 
-        checkLines: function () {
+        checkAndDeleteLines: function () {
+            for (var line = 0; line < this.height; line++) {
+                if (this._checkLine(this.fieldArray[line])) {
+                    this.fieldArray.splice(line, 1);
+                    this.fieldArray.unshift(Array.apply(null, new Array(this.width)).map(Number.prototype.valueOf,0));
+                    this.checkAndDeleteLines();
+                    break;
+                }
+            }
+            return this.fieldArray;
+        },
 
+        /**
+         * Checks whether the line is filed completely
+         * @param line
+         * @returns {boolean}
+         * @private
+         */
+        _checkLine: function (line) {
+            for (var i = 0, length = line.length; i < length; i++) {
+                if (line[i] === 0) {
+                    return false;
+                }
+            }
+            return true;
         },
 
         /**
@@ -64,31 +85,9 @@
                 resultArray.push(tempArray);
             }
             return resultArray;
-
-        },
-
-        /**
-         * Creates UI for game field.
-         * @param {Number} width
-         * @param {Number} height
-         */
-        htmlRenderer: function (width, height) {
-            var mainField = document.createElement("div"),
-                cellSize = 40;
-
-            mainField.style.width = width * cellSize + "px";
-            mainField.style.height = height * cellSize + "px";
-            mainField.id = "gameField";
-            document.body.appendChild(mainField);
-
-            for (var i = 0; i < (width * height)-1; i++) {
-                var cell = document.createElement("div");
-                cell.style.width = cellSize + "px";
-                cell.style.height = cellSize + "px";
-                cell.className = "cell";
-                document.getElementById('gameField').appendChild(cell);
-            }
         }
+
+
 
     };
     global.Field  = Field;

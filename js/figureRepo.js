@@ -61,14 +61,19 @@
         },
 
         /**
-         * Gets random figure
+         * Gets random figure and rotate in randomly
          * @returns {Figure}
          */
         getRandomFigure: function () {
             var num = this.getRandomFigureNum(),
-                color = this.getRandomColor();
+                color = this.getRandomColor(),
+                figure = this.getFigure(num, color),
+                rotNum = (Math.random() * 3) | 0;
 
-            return this.getFigure(num, color);
+            for (var i = 0; i < rotNum; i++) {
+                figure.rotate();
+            }
+            return figure;
         },
 
         /**

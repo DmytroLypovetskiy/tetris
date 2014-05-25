@@ -44,8 +44,7 @@
                     if (cell > 0) {
                         row[index] = colorId;
                     }
-                })
-
+                });
             });
         },
 
@@ -74,7 +73,8 @@
             var currentX = this.x,
                 currentY = this.y,
                 figWidth = this.model[0].length,
-                figHeight = this.model.length;
+                figHeight = this.model.length,
+                isCollision = false;
 
             // Change position
             this.x += x;
@@ -82,15 +82,23 @@
 
             // Check if the figure is not out of field
             if ((this.x + figWidth > this.field.width) || (this.x < 0) || (this.y + figHeight > this.field.height)) {
-                return false;
+                isCollision = true;
             }
-
-            // Checking collisions with other figures
-            if (this.checkCollisions()) {
+            if (!isCollision) {
+                // Checking collisions with other figures
+                if (this.checkCollisions()) {
+                    isCollision = true;
+                }
+            }
+            if (isCollision) {
                 this.x = currentX;
                 this.y = currentY;
-                //this.field.checkLines();
-                //this.field.dropFigure(this);
+                // In case moving down we have to do additional actions
+                if (y !== 0) {
+                    this.field.checkAndDeleteLines();
+                    this.field.fieldArray = global.Utils.arrayUnion(this.field.fieldArray, this.model, this.x, this.y);
+                    global.game.dropNewFigure();
+                }
                 return false;
             }
             return true;

@@ -1,5 +1,8 @@
 (function (global) {
     Test.describe('Figure');
+    global.game = {
+      dropNewFigure: function () {}
+    };
     var figure = new global.Figure([
         [0, 1],
         [0, 1],
