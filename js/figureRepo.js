@@ -5,16 +5,24 @@
      * @singleton
      */
     var FigureRepository = {
-        colors: {
-            'red': {
+        colors: [
+            {
                 id: 1,
                 hex: '#ff0000'
             },
-            'blue': {
+            {
                 id: 2,
                 hex: '#00ff00'
+            },
+            {
+                id: 3,
+                hex: '#0000ff'
+            },
+            {
+                id: 4,
+                hex: '#000000'
             }
-        },
+        ],
         figures: [
             [
                 [0, 1],
@@ -71,7 +79,7 @@
                 rotNum = (Math.random() * 3) | 0;
 
             for (var i = 0; i < rotNum; i++) {
-                figure.rotate();
+                figure.rotate(true);
             }
             return figure;
         },
@@ -86,15 +94,10 @@
 
         /**
          * Gets random color
-         * @returns {Color}
+         * @returns {Object}
          */
         getRandomColor: function () {
-            var result;
-            var count = 0;
-            for (var prop in this.colors)
-                if (Math.random() < 1 / ++count)
-                    result = prop;
-            return this.colors[result];
+            return this.colors[(Math.random() * this.colors.length) | 0];
         }
     };
 

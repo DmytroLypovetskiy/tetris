@@ -18,7 +18,8 @@
         render: function (field, figure) {
             var mainField = document.createElement('div'),
                 container = document.querySelector(this.options.container),
-                resultArray;
+                resultArray,
+                color;
 
             mainField.style.width = field.width * this.options.cellSize + 'px';
             mainField.style.height = field.height * this.options.cellSize + 'px';
@@ -34,15 +35,17 @@
                     var cell = document.createElement('div');
                     cell.style.width = this.options.cellSize + 'px';
                     cell.style.height = this.options.cellSize + 'px';
-                    cell.style.backgroundColor = resultArray[i][j] > 0 ? '#ff0000': '';
+
+                    color = (resultArray[i][j] !== 0) ? global.FigureRepository.colors.filter(function (c) {
+                        return c.id === resultArray[i][j];
+                    })[0] : '#ffffff';
+                    cell.style.backgroundColor = color.hex;
                     cell.className = 'cell';
                     document.getElementById('gameField').appendChild(cell);
                 }
 
             }
         }
-
-
     };
     global.HtmlRenderer  = HtmlRenderer;
 })(this);

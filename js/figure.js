@@ -50,16 +50,30 @@
 
         /**
          * Rotate figure to the right.
+         * @param {Boolean}
          */
-        rotate: function () {
-            var resultMatrix = [];
+        rotate: function (force) {
+            var resultMatrix = [],
+                isIntersected,
+                force = !!force;
+
             for (var i = 0, xLen = this.model[0].length; i < xLen; i++) {
                 resultMatrix[i] = [];
                 for (var j = 0, yLen = this.model.length; j < yLen; j++) {
                     resultMatrix[i].unshift(this.model[j][i]);
                 }
             }
+
+            isIntersected = !force && global.Utils.isArraysIntersected(
+                resultMatrix,
+                this.field.getSubArray(this.x, this.y, resultMatrix[0].length, resultMatrix.length));
+
+            if (!force && (isIntersected || (resultMatrix[0].length + this.x > this.field.width))) {
+                return false;
+            }
+
             this.model = resultMatrix;
+
         },
 
         /**
@@ -93,12 +107,13 @@
             if (isCollision) {
                 this.x = currentX;
                 this.y = currentY;
+
                 // In case moving down we have to do additional actions
                 if (y !== 0) {
-                    this.field.checkAndDeleteLines();
-                    this.field.fieldArray = global.Utils.arrayUnion(this.field.fieldArray, this.model, this.x, this.y);
                     global.game.dropNewFigure();
+                    this.field.fieldArray = global.Utils.arrayUnion(this.field.fieldArray, this.model, this.x, this.y);
                 }
+                this.field.checkAndDeleteLines();
                 return false;
             }
             return true;
