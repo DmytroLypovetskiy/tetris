@@ -55,7 +55,9 @@
         rotate: function (force) {
             var resultMatrix = [],
                 isIntersected,
-                force = !!force;
+                force = !!force,
+                originalX = this.x,
+                originalY = this.y;
 
             for (var i = 0, xLen = this.model[0].length; i < xLen; i++) {
                 resultMatrix[i] = [];
@@ -68,7 +70,12 @@
                 resultMatrix,
                 this.field.getSubArray(this.x, this.y, resultMatrix[0].length, resultMatrix.length));
 
-            if (!force && (isIntersected || (resultMatrix[0].length + this.x > this.field.width)  || (resultMatrix.length + this.y > this.field.height) )) {
+            this.x -= ((resultMatrix[0].length - this.model[0].length) / 2) | 0;
+            this.y -= ((resultMatrix.length - this.model.length) / 2) | 0;
+
+            if (!force && (isIntersected || (resultMatrix[0].length + this.x > this.field.width) || (this.x < 0) || (resultMatrix.length + this.y > this.field.height) )) {
+                this.x = originalX;
+                this.y = originalY;
                 return false;
             }
 

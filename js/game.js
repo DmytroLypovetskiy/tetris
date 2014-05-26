@@ -11,7 +11,7 @@
         field: null,
         renderer: null,
         prevFrameTime: 0,
-        currentSpeed: 200,
+        currentSpeed: 400,
         progress: 0,
         score: 0,
 
@@ -30,6 +30,11 @@
             // Event for rotate
             this.keyController.on(global.KEY.UP_ARROW, function () {
                 this.currentFigure.rotate();
+            }, this);
+
+            // Event for rotate
+            this.keyController.on(global.KEY.SPACE, function () {
+              this.currentFigure.rotate();
             }, this);
 
             // Event for move figure to the left
