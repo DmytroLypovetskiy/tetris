@@ -45,14 +45,25 @@
      * @returns {Array}
      */
     checkAndDeleteLines: function() {
-      for (var line = 0; line < this.height; line++) {
-        if (this._checkLine(this.fieldArray[line])) {
-          this.fieldArray.splice(line, 1);
-          this.fieldArray.unshift(Array.apply(null, new Array(this.width)).map(Number.prototype.valueOf, 0));
-          this.checkAndDeleteLines();
-          break;
+      var isClean = false,
+          totalLines = 0;
+
+      mainLoop:
+      while (!isClean) {
+        for (var line = 0; line < this.height; line++) {
+          if (this._checkLine(this.fieldArray[line])) {
+            this.fieldArray.splice(line, 1);
+            this.fieldArray.unshift(Array.apply(null, new Array(this.width)).map(Number.prototype.valueOf, 0));
+            totalLines++;
+            continue mainLoop;
+          }
         }
+        isClean = true;
       }
+      if (totalLines > 0) {
+        this.onLinesUpdated(totalLines);
+      }
+
       return this.fieldArray;
     },
 
@@ -92,7 +103,15 @@
         resultArray.push(tempArray);
       }
       return resultArray;
-    }
+    },
+
+    /**
+     * This method may be override in the game.
+     * It will be called every time when some lines are disposed.
+     * @method
+     * @param {number} [lineNum] count of lines
+     */
+    onLinesUpdated: function (lineNum) {}
   };
   global.Field = Field;
 })(this);

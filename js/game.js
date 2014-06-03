@@ -17,13 +17,11 @@
 
     /**
      * Link to the Field.
-     * @type Field
      */
     field: null,
 
     /**
      * Current renderer.
-     * @type Renderer
      */
     renderer: null,
 
@@ -47,9 +45,9 @@
 
     /**
      * Current game scores
-     * @type number
+     * @type object
      */
-    score: 0,
+    stats: null,
 
     /**
      * Current figure
@@ -68,8 +66,13 @@
      * @method
      */
     init: function() {
-      this.score = 0;
+      this.stats = {
+        lines: 0,
+        scores: 0
+      };
+
       this.field = new global.Field();
+      this.field.onLinesUpdated = this.onLinesUpdated.bind(this);
       this.renderer = new global.HtmlRenderer({
         container: '#wrapper'
       });
@@ -134,7 +137,7 @@
         this.currentFigure.update();
       }
       this.draw();
-      requestAnimationFrame(this.update.bind(this));
+      this.initLoop();
     },
 
     /**
@@ -142,7 +145,7 @@
      * @method
      */
     draw: function() {
-      this.renderer.render(this.field, this.currentFigure, this.nextFigure);
+      this.renderer.render(this.field, this.currentFigure, this.nextFigure, this.stats);
     },
 
     /**
@@ -161,6 +164,25 @@
         this.draw();
         this.gameOver();
       }
+    },
+
+    /**
+     * Method will be called every time, when some line
+     * are disposed.
+     * @param {lineNum} [lineNum] count of lines
+     */
+    onLinesUpdated: function (lineNum) {
+      this.addScores(lineNum);
+    },
+
+    /**
+     * Updates stats.
+     * @param {number=} {lineNum} number of lines to be added
+     */
+    addScores: function (lineNum) {
+      lineNum = lineNum || 1;
+      this.stats.lines += lineNum;
+      this.stats.scores += lineNum * lineNum * 10;
     },
 
     /**

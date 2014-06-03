@@ -28,6 +28,7 @@
     render: function(field, figure, nextFigure, stats) {
       var mainField = document.createElement('div'),
         nextFigureArea = document.createElement('div'),
+        statsContainer = document.createElement('strong'),
         container = document.querySelector(this.options.container),
         resultArray;
 
@@ -46,8 +47,13 @@
       mainField.appendChild(this._renderField(resultArray));
       // render next figure
       nextFigureArea.appendChild(this._renderField(nextFigure.model));
+      // render stats
+      statsContainer.style.float = 'left';
+      statsContainer.innerHTML = 'SCORES: ' + stats.scores;
+      statsContainer.style.color = '#0c0';
       // clear screen
       container.innerHTML = '';
+      container.appendChild(statsContainer);
       container.appendChild(nextFigureArea);
       container.appendChild(mainField);
     },
