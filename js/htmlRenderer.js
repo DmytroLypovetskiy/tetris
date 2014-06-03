@@ -49,7 +49,7 @@
       nextFigureArea.appendChild(this._renderField(nextFigure.model));
       // render stats
       statsContainer.style.float = 'left';
-      statsContainer.innerHTML = 'SCORES: ' + stats.scores;
+      statsContainer.innerHTML = 'SCORES: ' + stats.scores + '<br/>LEVEL: ' + stats.level;
       statsContainer.style.color = '#0c0';
       // clear screen
       container.innerHTML = '';

@@ -117,8 +117,8 @@
 
         // In case moving down we have to do additional actions
         if (y !== 0) {
-          global.game.dropNewFigure();
           this.field.fieldArray = global.Utils.arrayUnion(this.field.fieldArray, this.model, this.x, this.y);
+          this.onCollided();
         }
         this.field.checkAndDeleteLines();
         return false;
@@ -143,7 +143,12 @@
      */
     update: function() {
       this.move(0, 1);
-    }
+    },
+
+    /**
+     * Needs to be override in the game
+     */
+    onCollided: function () {}
   };
 
   global.Figure = Figure;

@@ -16,6 +16,13 @@
     constructor: Game,
 
     /**
+     * How much figures for the level.
+     * @constant
+     * @type Number
+     */
+    FIGURES_PER_LEVEL: 50,
+
+    /**
      * Link to the Field.
      */
     field: null,
@@ -35,7 +42,7 @@
      * Current game speed in milliseconds
      * @type number
      */
-    currentSpeed: 400,
+    currentSpeed: 1000,
 
     /**
      * Total time the game is executed
@@ -68,7 +75,9 @@
     init: function() {
       this.stats = {
         lines: 0,
-        scores: 0
+        scores: 0,
+        figures: 0,
+        level: 1
       };
 
       this.field = new global.Field();
@@ -159,17 +168,20 @@
       this.currentFigure = this.nextFigure;
       this.currentFigure.field = this.field;
       this.currentFigure.x = this.field.width / 2 - 1;
+      this.currentFigure.onCollided = this.onFiguresCollided.bind(this);
       this.nextFigure = global.FigureRepository.getRandomFigure();
       if (this.currentFigure.checkCollisions()) {
         this.draw();
         this.gameOver();
       }
+      // Increase the num of figures
+      this.stats.figures++;
     },
 
     /**
      * Method will be called every time, when some line
      * are disposed.
-     * @param {lineNum} [lineNum] count of lines
+     * @param {number} [lineNum] count of lines
      */
     onLinesUpdated: function (lineNum) {
       this.addScores(lineNum);
@@ -183,6 +195,22 @@
       lineNum = lineNum || 1;
       this.stats.lines += lineNum;
       this.stats.scores += lineNum * lineNum * 10;
+    },
+
+    /**
+     * Will be called every time when figures collide with bottom border
+     * or another figures.s
+     * @method
+     */
+    onFiguresCollided: function () {
+      // update level
+      if (this.stats.figures >= this.FIGURES_PER_LEVEL) {
+        this.stats.figures = 0;
+        this.stats.level = Math.min(9, this.stats.level + 1);
+        this.currentSpeed = 1000 - this.stats.level * 100;
+      }
+      // drop new figure into the field
+      this.dropNewFigure();
     },
 
     /**
