@@ -24,11 +24,13 @@
      * @param {Figure} [figure] current figure
      * @param {Figure} [nextFigure] next figure
      * @param {Object} [stats] statistic and scores
+     * @param {Boolean} [isPaused] whether the game is paused
      */
-    render: function(field, figure, nextFigure, stats) {
+    render: function(field, figure, nextFigure, stats, isPaused) {
       var mainField = document.createElement('div'),
         nextFigureArea = document.createElement('div'),
         statsContainer = document.createElement('strong'),
+        pauseOverlay = document.createElement('div'),
         container = document.querySelector(this.options.container),
         resultArray;
 
@@ -56,6 +58,10 @@
       container.appendChild(statsContainer);
       container.appendChild(nextFigureArea);
       container.appendChild(mainField);
+      if (isPaused) {
+        pauseOverlay.className = 'pause';
+        container.appendChild(pauseOverlay);
+      }
     },
 
     /**

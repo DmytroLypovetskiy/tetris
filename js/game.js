@@ -69,6 +69,12 @@
     nextFigure: null,
 
     /**
+     * Game state pause
+     * @type boolean
+     */
+    isPaused: false,
+
+    /**
      * Init function
      * @method
      */
@@ -122,6 +128,11 @@
       this.keyController.on(global.KEY.DOWN_ARROW, function() {
         this.currentFigure.move(0, 1);
       }, this);
+
+      // Event for move figure to the bottom
+      this.keyController.on(global.KEY.ENTER, function() {
+        this.isPaused = !this.isPaused;
+      }, this);
     },
 
     /**
@@ -141,7 +152,7 @@
       var delta = timestamp - this.prevFrameTime;
       this.prevFrameTime = timestamp;
       this.progress += delta;
-      if (this.progress >= this.currentSpeed) {
+      if ((this.progress >= this.currentSpeed) && !this.isPaused) {
         this.progress = 0;
         this.currentFigure.update();
       }
@@ -154,7 +165,13 @@
      * @method
      */
     draw: function() {
-      this.renderer.render(this.field, this.currentFigure, this.nextFigure, this.stats);
+      this.renderer.render(
+        this.field,
+        this.currentFigure,
+        this.nextFigure,
+        this.stats,
+        this.isPaused
+      );
     },
 
     /**
