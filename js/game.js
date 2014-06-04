@@ -5,7 +5,7 @@
   /**
    * @class
    * @description
-   * Main Game class which links all game components together.s
+   * Main Game class which links all game components together.
    * @constructor
    */
   var Game = function() {
@@ -129,7 +129,7 @@
         this.currentFigure.move(0, 4);
       }, this);
 
-      // Event for move figure to the bottom
+      // Event for pause
       this.keyController.on(global.KEY.ENTER, function() {
         this.isPaused = !this.isPaused;
       }, this);
@@ -176,6 +176,7 @@
 
     /**
      * Create and drops new figure to the field.
+     * @method
      */
     dropNewFigure: function() {
       // If nextFigure is not created yet (when the game is started)
@@ -198,6 +199,7 @@
     /**
      * Method will be called every time, when some line
      * are disposed.
+     * @method
      * @param {number} [lineNum] count of lines
      */
     onLinesUpdated: function (lineNum) {
@@ -206,6 +208,7 @@
 
     /**
      * Updates stats.
+     * @method
      * @param {number=} {lineNum} number of lines to be added
      */
     addScores: function (lineNum) {

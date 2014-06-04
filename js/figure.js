@@ -98,7 +98,7 @@
         figHeight = this.model.length,
         isCollision = false;
 
-      // Trace rout until it will not be collapsed
+      // Trace rout until the figure will not be collided
       while ((this.x !== currentX + x) || (this.y !== currentY + y)) {
         prevX = this.x;
         prevY = this.y;
