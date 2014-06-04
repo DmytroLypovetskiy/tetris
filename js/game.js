@@ -20,7 +20,7 @@
      * @constant
      * @type Number
      */
-    FIGURES_PER_LEVEL: 50,
+    FIGURES_PER_LEVEL: 100,
 
     /**
      * Link to the Field.
@@ -126,7 +126,7 @@
 
       // Event for move figure to the bottom
       this.keyController.on(global.KEY.DOWN_ARROW, function() {
-        this.currentFigure.move(0, 4);
+        this.currentFigure.move(0, this.field.height);
       }, this);
 
       // Event for pause
@@ -214,7 +214,7 @@
     addScores: function (lineNum) {
       lineNum = lineNum || 1;
       this.stats.lines += lineNum;
-      this.stats.scores += lineNum * lineNum * 10;
+      this.stats.scores += lineNum * lineNum * 10 * this.stats.level;
     },
 
     /**
