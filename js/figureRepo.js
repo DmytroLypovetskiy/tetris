@@ -21,6 +21,18 @@
       {
         id: 4,
         hex: '#ffff00'
+      },
+      {
+        id: 5,
+        hex: '#e940df'
+      },
+      {
+        id: 6,
+        hex: '#2acad4'
+      },
+      {
+        id: 7,
+        hex: '#ccc4cb'
       }
     ],
     figures: [
@@ -74,7 +86,7 @@
      */
     getRandomFigure: function() {
       var num = this.getRandomFigureNum(),
-        color = this.getRandomColor(),
+        color = this.getColorByIndex(num),
         figure = this.getFigure(num, color),
         rotNum = (Math.random() * 3) | 0;
 
@@ -98,6 +110,15 @@
      */
     getRandomColor: function() {
       return this.colors[(Math.random() * this.colors.length) | 0];
+    },
+
+    /**
+     * Gets the color by index in array.
+     * @param {number} index
+     * @returns {Color}
+     */
+    getColorByIndex: function (index) {
+      return  this.colors[index];
     }
   };
 
