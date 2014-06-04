@@ -81,7 +81,7 @@
     },
 
     /**
-     * Gets random figure and rotate in randomly
+     * Gets random figure and rotate in randomly.
      * @returns {Figure}
      */
     getRandomFigure: function() {
@@ -97,7 +97,7 @@
     },
 
     /**
-     * Gets random figure number
+     * Gets random figure number.
      * @returns {Number}
      */
     getRandomFigureNum: function() {
@@ -105,7 +105,8 @@
     },
 
     /**
-     * Gets random color
+     * Gets random color.
+     * @deprecated
      * @returns {Object}
      */
     getRandomColor: function() {

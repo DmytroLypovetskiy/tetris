@@ -126,7 +126,7 @@
 
       // Event for move figure to the bottom
       this.keyController.on(global.KEY.DOWN_ARROW, function() {
-        this.currentFigure.move(0, 1);
+        this.currentFigure.move(0, 4);
       }, this);
 
       // Event for move figure to the bottom
